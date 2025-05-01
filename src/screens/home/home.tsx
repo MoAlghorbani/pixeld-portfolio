@@ -12,10 +12,9 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
   const isFirstVisit = useFirstVisit('home');
   const [sections] = useState<Section[]>([
-    { name: 'Experience', route: 'experience' },
+    { name: 'Experience & Projects', route: 'experience' },
     { name: 'Skills', route: 'skills' },
-    { name: 'Learning & Training', route: 'learning-training' },
-    { name: 'Certifications & Projects', route: 'certifications-projects' },
+    { name: 'Learning & Certifications & Training', route: 'learning-training' },
     { name: 'Contact', route: 'contact' }
   ]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
@@ -43,7 +42,7 @@ export const Home: React.FC = () => {
         duration={40} 
         text='Hey, I am Mohammed Al-ghorbani, a obsessive software developer.'
         onComplete={() => setIntroComplete(true)}
-        style={{ fontSize: '2.25rem' }}
+        style={{ fontSize: 'clac(10px+1120px)' }}
         animate={isFirstVisit}
       />      
       <div style={{ marginTop: '5rem' }}>
@@ -54,7 +53,6 @@ export const Home: React.FC = () => {
             className="text-q text-q-content"
             style={{ 
               cursor: 'pointer', 
-              maxWidth: '300px', 
               fontSize: '1.5rem', 
               marginBottom: '1.6rem',
               display: 'block',
