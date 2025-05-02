@@ -82,13 +82,30 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
   return (
     <div className="audio-player">
-      <div className="song-list-container">
-        {songs.map((song, index) => (
-          <q key={song.id} onClick={() => changeSong(index)}
-            className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}>
-            {song.title}
-          </q>
-        ))}
+      <div>
+
+        <div className="song-list-container">
+          {songs.map((song, index) => (
+            <q key={song.id} onClick={() => changeSong(index)}
+              className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}>
+              {song.title}
+            </q>
+          ))}
+        </div>
+        <div className="canvas-container">
+          <canvas
+            ref={canvasRef}
+            width="600"
+            height="300"
+            style={{
+              width: '100%',
+              height: '120px',
+              backgroundColor: 'black',
+              marginBottom: '20px',
+              borderRadius: '8px',
+            }}
+          />
+        </div>
       </div>
       <div className="audio-player-buttons">
         <Button onClick={playAudio} disabled={isPlaying}>
@@ -105,18 +122,6 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
         {children}
       </div>
-      <canvas
-        ref={canvasRef}
-        width="600"
-        height="200"
-        style={{
-          width: '100%',
-          height: '80px',
-          backgroundColor: 'black',
-          marginBottom: '20px',
-          borderRadius: '8px',
-        }}
-      />
       <VolumeKnob audioRef={audioRef} initialVolume={50} />
     </div>
   );

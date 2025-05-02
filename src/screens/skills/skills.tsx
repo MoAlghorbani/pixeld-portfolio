@@ -24,19 +24,23 @@ export const Skills = () => {
         },
         {
             type: 'skill',
-            text: 'React: Proficient in React.js concepts and ecosystem, including TanStack Query, Zustand, PrimeReact, Material UI, React Hook Form, React Router, and more.'
+            text: 'React'
         },
         {
             type: 'skill',
-            text: 'Flutter: Built multiple projects and worked with maps, notifications, state management (GetX), sqflite, Firebase and more.'
+            text: 'Flutter'
         },
         {
             type: 'skill',
-            text: 'React Native: Worked with react native and expo ecosystem.'
+            text: 'Djano'
         },
         {
             type: 'skill',
-            text: 'OWL (Odoo Framework): Worked with odoo framework.'
+            text: 'NodeJs - ExpressJs'
+        },
+        {
+            type: 'skill',
+            text: 'ReactNative'
         },
         {
             type: 'heading',
@@ -44,7 +48,7 @@ export const Skills = () => {
         },
         {
             type: 'skill',
-            text: 'Build and customize odoo apps, to meet the business needs'
+            text: 'Build and customize odoo apps, to meet the business needs.'
         },
         {
             type: 'heading',
@@ -76,6 +80,10 @@ export const Skills = () => {
         },
         {
             type: 'skill',
+            text: 'Gitlab'
+        },
+        {
+            type: 'skill',
             text: 'Azure DevOps'
         },
     ];
@@ -97,7 +105,7 @@ export const Skills = () => {
             <div className='text-q text-q-content' style={{ fontSize: '1.2rem', whiteSpace: 'pre-wrap' }}>
                 <TypingAnimation
                     text={allTexts}
-                    duration={5} // Adjust duration as needed for the combined text
+                    duration={1} // Adjust duration as needed for the combined text
                     animate={isFirstVisit}
                     style={{ fontSize: '1.2rem' }}
                 />
