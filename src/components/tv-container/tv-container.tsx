@@ -3,16 +3,19 @@ import './tv-container.css'
 import frame from '../../assets/frame.svg'
 import { AudioPlayer } from '../audio-player/audio-player'
 import buttonClickSound from '../../assets/button_click.mp3';
+import loginSound from '../../assets/login.wav';
+import { useScreen } from '../../context/ScreenContext';
 
 interface Props {
     children: React.ReactNode
 }
 export const TvContainer: React.FC<Props> = ({ children }) => {
-    const [isScreenOn, setIsScreenOn] = React.useState(true);
+    const { isScreenOn, toggleScreen } = useScreen();
     const buttonSoundRef = useRef(new Audio(buttonClickSound));
+    const loginSoundRef = useRef(new Audio(loginSound));
     const togglePower = async () => {
-        await buttonSoundRef.current.play();
-        setIsScreenOn(!isScreenOn);
+        isScreenOn ? await buttonSoundRef.current.play() : await loginSoundRef.current.play();
+        toggleScreen();
     };
 
     return (

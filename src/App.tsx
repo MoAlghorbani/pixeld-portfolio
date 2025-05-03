@@ -7,6 +7,7 @@ import { Home } from './screens/home/home';
 import { LearningTraining } from './screens/learning-training/learning-training';
 import { Skills } from './screens/skills/skills';
 import { useKeyboardSound } from './hooks/useKeyboardSound';
+import { ScreenProvider } from './context/ScreenContext';
 
 function AppContent() {
   return (
@@ -41,7 +42,9 @@ function App() {
   });
 
   return (
-    <AppContent />
+    <ScreenProvider>
+      <AppContent />
+    </ScreenProvider>
   );
 }
 

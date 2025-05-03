@@ -8,6 +8,8 @@ import backgroundMusic from '../../assets/song.mp3';
 import song2 from '../../assets/song2.mp3';
 import song3 from '../../assets/song3.mp3';
 import { Button } from '../button/button';
+import DecryptedText from '../decrypted-text/decrypted-text';
+import { useScreen } from '../../context/ScreenContext';
 
 interface Props {
   children: React.ReactNode;
@@ -27,6 +29,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextManagerRef = useRef<AudioContextManager | null>(null);
   const visualizerRef = useRef<AudioVisualizer | null>(null);
+  const { isScreenOn, registerOnScreenOff, unregisterOnScreenOff } = useScreen();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -43,7 +46,29 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    
+    const handleScreenOff = async () => {
+      if (isPlaying) {
+        try {
+          audioRef.current.pause();
+          setIsPlaying(false);
+          visualizerRef.current?.stop();
+        } catch (error) {
+          console.error('Error pausing audio when screen turned off:', error);
+        }
+      }
+    };
+    
+    registerOnScreenOff(handleScreenOff);
+    
+    return () => {
+      unregisterOnScreenOff();
+    };
+  }, [registerOnScreenOff, unregisterOnScreenOff, isPlaying]);
+
   const playAudio = async () => {
+    if (!isScreenOn) return;
     try {
       await audioContextManagerRef.current?.resume();
       await buttonSoundRef.current.play();
@@ -57,6 +82,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   };
 
   const pauseAudio = async () => {
+    if (!isScreenOn) return;
     try {
       await buttonSoundRef.current.play();
       await new Promise(resolve => setTimeout(resolve, 200));
@@ -86,10 +112,10 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
         <div className="song-list-container">
           {songs.map((song, index) => (
-            <q key={song.id} onClick={() => changeSong(index)}
-              className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}>
-              {song.title}
-            </q>
+             <q key={song.id} onClick={() => changeSong(index)}
+               className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}>
+               {song.title}
+             </q>
           ))}
         </div>
         <div className="canvas-container">

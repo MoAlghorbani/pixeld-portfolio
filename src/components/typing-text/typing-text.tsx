@@ -22,7 +22,7 @@ export function TypingAnimation({
   const [i, setI] = useState<number>(0);
 
   useEffect(() => {
-    if (!animate) {
+    if (animate) {
       setDisplayedText(text);
       onComplete?.();
       return;
