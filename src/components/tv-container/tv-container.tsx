@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import './tv-container.css'
 import frame from '../../assets/frame.svg'
 import { AudioPlayer } from '../audio-player/audio-player'
-
+import buttonClickSound from '../../assets/button_click.mp3';
 
 interface Props {
     children: React.ReactNode
 }
 export const TvContainer: React.FC<Props> = ({ children }) => {
     const [isScreenOn, setIsScreenOn] = React.useState(true);
-
-    const togglePower = () => {
+    const buttonSoundRef = useRef(new Audio(buttonClickSound));
+    const togglePower = async () => {
+        await buttonSoundRef.current.play();
         setIsScreenOn(!isScreenOn);
     };
 

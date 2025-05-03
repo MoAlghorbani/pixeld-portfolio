@@ -6,6 +6,7 @@ import { Experience } from './screens/experience/experience';
 import { Home } from './screens/home/home';
 import { LearningTraining } from './screens/learning-training/learning-training';
 import { Skills } from './screens/skills/skills';
+import { useKeyboardSound } from './hooks/useKeyboardSound';
 
 function AppContent() {
   return (
@@ -32,9 +33,15 @@ function AppContent() {
 }
 
 function App() {
+  // Initialize keyboard sound effect
+  useKeyboardSound({
+    enabled: true,
+    volume: 0.3, // Adjust volume as needed
+    excludeKeys: ['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Tab']
+  });
+
   return (
     <AppContent />
-
   );
 }
 
