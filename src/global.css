@@ -1,17 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+
+:root {
+  --main-green: #7aff60;
+  --dark-green: #126B12;
+  --display-height: 100vh;
+  --blink-time: 500ms;
+  scrollbar-color: var(--main-green) var(--dark-green);
+  scrollbar-width: thin;
+  --pc-container-left-width: 280px;
+  /* font-size: clamp(18px, 3vw, 30px); */
+}
+
+.scroll {
+  scrollbar-color: var(--main-green) var(--dark-green);
+  scrollbar-width: thin;
+}
+
+* {
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+
+
+.back-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  z-index: 999;
+}
+
+.back-button:hover path {
+  stroke: var(--main-green);
+  filter: drop-shadow(0 0 0.5ex #3f3);
+}
 
 @keyframes blink {
-  0%,49% { border-right-color: transparent }
-  50%,100% { border-right-color: currentColor }
+
+  0%,
+  49% {
+    border-right-color: transparent
+  }
+
+  50%,
+  100% {
+    border-right-color: currentColor
+  }
 }
 
 @keyframes scan {
-  0% { background-position: 0 -100vh; }
-  35%,100% { background-position: 0 100vh; }
+  0% {
+    background-position: 0 -100vh;
+  }
+
+  35%,
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+.mb-2 {
+  margin-bottom: 8px;
 }
 
 body {
-  margin: 0;  
+  margin: 0;
 }
+
 .App {
   background-color: #121;
   min-height: 100vh;
@@ -21,7 +83,7 @@ body {
 section {
   border-radius: 1em;
   background-color: #131;
-  background-image: 
+  background-image:
     radial-gradient(ellipse 500% 100% at 50% 90%, transparent, #121);
   background-position: center;
   display: flex;
@@ -29,9 +91,9 @@ section {
   height: 100%;
   width: 100%;
   padding: 2em;
-  box-shadow: inset 0 0 10em 1em rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 10em 1em rgba(0, 0, 0, 0.5);
   overflow: auto;
-  color: rgba(128,255,128,0.8);
+  color: rgba(128, 255, 128, 0.8);
   position: relative;
 }
 
@@ -45,11 +107,11 @@ section::before {
   bottom: 0;
   pointer-events: none;
   background-image: linear-gradient(0deg,
-    transparent 0%,
-    rgba(32,128,32,0.2) 2%,
-    rgba(32,128,32,0.8) 3%,
-    rgba(32,128,32,0.2) 3%,
-    transparent 100%);
+      transparent 0%,
+      rgba(32, 128, 32, 0.2) 2%,
+      rgba(32, 128, 32, 0.8) 3%,
+      rgba(32, 128, 32, 0.2) 3%,
+      transparent 100%);
   background-repeat: no-repeat;
   animation: scan 7.5s linear 0s infinite;
 }
@@ -63,16 +125,16 @@ section::after {
   right: 0;
   bottom: 0;
   pointer-events: none;
-  background-image:    
-    radial-gradient(ellipse 200% 20% at 50% 0%, rgba(0,0,0,0.5), transparent);
+  background-image:
+    radial-gradient(ellipse 200% 20% at 50% 0%, rgba(0, 0, 0, 0.5), transparent);
   background-size: 100%, 100%, 100%, 100%, 100%, 100% 0.25ch;
 }
 
 .text-q {
   border-right: 0 solid currentColor;
   animation: blink var(--blink-time) linear 0s infinite;
-  text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255,255,255,0.5);
-  display: block; 
+  text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255, 255, 255, 0.5);
+  display: block;
 }
 
 .text-q-content::before {
@@ -83,9 +145,19 @@ section::after {
   border-right-width: 1ch;
 } */
 .text-q-click:hover {
-  color: #18580b;  
+  color: #18580b;
   font-weight: bold;
   background-color: #00ff00;
   cursor: pointer;
 }
 
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
