@@ -1,16 +1,20 @@
-.volume-knob-main-container{
+
+
+.volume-knob-main-container {
   border-radius: 12px;
   background-color: rgba(0, 0, 0, .15);
   box-shadow: 0 1px 1px 0 rgba(255, 255, 255, .75), inset 0 2px 2px rgba(0, 0, 0, .25);
   position: relative;
   width: 200px;
-  
+  padding: 10px 0px;
 }
+
 .volume-knob-container {
   user-select: none;
   text-align: center;
-  touch-action: manipulation;
-  /* position: relative; */
+  /* This is important - prevent default touch actions like scrolling */
+  touch-action: none;
+  position: relative;
   width: fit-content;
   margin: auto;
 }
@@ -36,7 +40,7 @@
   border-radius: 50%;
   background: #181818;
   background: linear-gradient(to top, #1d1d1d, #131313);
-  box-shadow: 
+  box-shadow:
     0 0.3em 0.2em 0.1em rgba(255, 255, 255, 0.1) inset,
     0 -0.3em 0.2em 0.1em rgba(0, 0, 0, 0.5) inset,
     0 0.4em 0.8em rgba(0, 0, 0, 0.4);
@@ -49,7 +53,7 @@
 
 .knob-surround:active .knob-top {
   transform: translateY(2px);
-  box-shadow: 
+  box-shadow:
     0 0.3em 0.2em 0.1em rgba(255, 255, 255, 0.1) inset,
     0 -0.3em 0.2em 0.1em rgba(0, 0, 0, 0.5) inset,
     0 0.2em 0.4em rgba(0, 0, 0, 0.4);
@@ -71,8 +75,8 @@
   left: 19%;
   width: 6%;
   height: 6%;
-  background-color: #b0b0b0;  
-  border-radius: 50%;  
+  background-color: #b0b0b0;
+  border-radius: 50%;
 }
 
 .knob-bottom {
@@ -84,7 +88,7 @@
   width: calc(100% - 8px);
   height: calc(100% - 8px);
   background-color: #181818;
-  box-shadow: 
+  box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.6),
     inset 0 -2px 5px 3px rgba(0, 0, 0, .4);
   transition: transform 0.2s ease;
@@ -92,7 +96,7 @@
 
 .knob-surround:active .knob-bottom {
   transform: translateY(2px);
-  box-shadow: 
+  box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.6),
     inset 0 -2px 5px 3px rgba(0, 0, 0, .4);
 }
@@ -109,12 +113,13 @@
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
 }
 
-.volume-labels{
+.volume-labels {
   position: absolute;
   width: 100%;
-  height: 0.1em;  
+  height: 0.1em;
   bottom: 1.5em;
 }
+
 .min,
 .max {
   display: block;
@@ -130,5 +135,16 @@
 }
 
 .max {
-  right: 15%;  
+  right: 15%;
+}
+@media (max-width: 600px) {
+  .volume-knob-main-container {
+    width: 120px;
+    height: 150px;
+    padding: 7px 0px;
+  }
+  .knob-surround {    
+    min-width: 100px;
+    min-height: 100px;
+  }
 }

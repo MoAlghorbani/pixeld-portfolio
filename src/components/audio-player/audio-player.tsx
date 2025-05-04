@@ -26,14 +26,14 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
-  
+
   // Refs
   const audioRef = useRef<HTMLAudioElement>(new Audio(songs[currentSongIndex].src));
   const buttonSoundRef = useRef(new Audio(buttonClickSound));
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextManagerRef = useRef<AudioContextManager | null>(null);
   const visualizerRef = useRef<AudioVisualizer | null>(null);
-  
+
   // Context
   const { isScreenOn, registerOnScreenOff, unregisterOnScreenOff } = useScreen();
 
@@ -136,11 +136,13 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   // Render component
   return (
     <div className="audio-player">
-      <div className="audio-player-content">
+      {/* Controls container for mobile layout */}
+      <div className="controls-container">
+        {/* Song list */}
         <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
           {isScreenOn && songs.map((song, index) => (
-            <q 
-              key={song.id} 
+            <q
+              key={song.id}
               onClick={() => changeSong(index)}
               className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
             >
@@ -148,22 +150,30 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
             </q>
           ))}
         </div>
-        <canvas ref={canvasRef} />
+        
+        {/* Audio control buttons */}
+        <div className="audio-player-buttons">
+          <Button onClick={playAudio} disabled={isPlaying}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </Button>
+          <Button onClick={pauseAudio} disabled={!isPlaying}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
+            </svg>
+          </Button>
+          {children}
+        </div>
       </div>
-      <div className="audio-player-buttons">
-        <Button onClick={playAudio} disabled={isPlaying}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </Button>
-        <Button onClick={pauseAudio} disabled={!isPlaying}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
-          </svg>
-        </Button>
-        {children}
+      
+      {/* Volume knob */}
+      <div className="volume-knob-container">
+        <VolumeKnob audioRef={audioRef} initialVolume={50} />
       </div>
-      <VolumeKnob audioRef={audioRef} initialVolume={50} />
+      
+      {/* Audio visualizer canvas */}
+      <canvas ref={canvasRef} />
     </div>
   );
 };

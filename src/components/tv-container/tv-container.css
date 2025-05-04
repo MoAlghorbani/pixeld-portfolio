@@ -1,8 +1,25 @@
 .pc-container {
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
+    position: relative;
 }
+
+@media (max-width: 600px) {
+    .pc-container {
+        flex-direction: column;
+        height: auto;
+        overflow-x: hidden;
+    }
+    
+    .pc-container-left {
+        height: auto;
+        min-height: 300px;
+        width: 100vw;
+        min-width: 100%;
+    }
+}
+
 
 .pc-container-right {
     width: 100%;
@@ -51,10 +68,10 @@
 .pc-container-left {
     background-color: #1E2B24;
     height: 100vh;
-    min-width: 280px;
+    min-width: var(--pc-container-left-width);
     padding: 10px;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* Scanlines effect */
