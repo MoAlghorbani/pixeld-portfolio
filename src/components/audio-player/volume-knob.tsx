@@ -33,26 +33,34 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
   const handleMouseMove = (event: MouseEvent | TouchEvent) => {
     if (!isDragging || !knobRef.current) return;
 
+    // Get the current position of the knob element
     const knobRect = knobRef.current.getBoundingClientRect();
     const knobCenterX = knobRect.width / 2 + knobRect.left;
     const knobCenterY = knobRect.height / 2 + knobRect.top;
 
-    const mouseX = 'touches' in event ? event.touches[0].pageX : event.pageX;
-    const mouseY = 'touches' in event ? event.touches[0].pageY : event.pageY;
+    // Get the current mouse/touch position
+    // Use clientX/Y instead of pageX/Y to handle scrolling correctly
+    const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+    const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
 
-    const adjacentSide = knobCenterX - mouseX;
-    const oppositeSide = knobCenterY - mouseY;
+    // Calculate the angle between the center of the knob and the mouse position
+    const adjacentSide = knobCenterX - clientX;
+    const oppositeSide = knobCenterY - clientY;
 
     let angle = Math.atan2(adjacentSide, oppositeSide) * 180 / Math.PI;
     angle = -(angle - 135);
 
-    if (angle >= 0 && angle <= 270) {
-      const volumeValue = Math.floor(angle / (270 / 100));
-      setVolume(volumeValue);
+    // Constrain the angle to 0-270 degrees (the valid range for the knob)
+    if (angle < 0) angle = 0;
+    if (angle > 270) angle = 270;
+    
+    // Convert the angle to a volume value (0-100)
+    const volumeValue = Math.floor(angle / (270 / 100));
+    setVolume(volumeValue);
 
-      if (audioRef.current) {
-        audioRef.current.volume = volumeValue / 100;
-      }
+    // Update the audio element's volume
+    if (audioRef.current) {
+      audioRef.current.volume = volumeValue / 100;
     }
   };
 
