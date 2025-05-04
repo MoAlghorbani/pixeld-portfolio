@@ -90,11 +90,12 @@
   transition: box-shadow 0.2s ease;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .button-14 {
     min-width: 3em;
     padding: 0 6px 10px;
     transform: translateY(-1px);
+    flex-grow: 1;
   }
   .button-14-top {
     padding: 4px 8px;
@@ -112,7 +113,7 @@
   }
 }
 
-@media (max-width: 500px) {
+/* @media (max-width: 500px) {
   .button-14 {
     min-width: 3em;
     padding: 0 6px 10px;
@@ -132,4 +133,4 @@
     height: calc(100% - 8px);
     border-radius: 6px / 12px 12px 6px 6px;
   }
-}
+} */
