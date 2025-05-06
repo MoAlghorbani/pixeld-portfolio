@@ -28,7 +28,7 @@ const MovingText = () => {
         initial="initial"
         animate="animate"
       >
-        FREE PALESTINE 🇵🇸
+        FREE PALESTINE 🇵🇸 
       </motion.div>
     </div>
   );

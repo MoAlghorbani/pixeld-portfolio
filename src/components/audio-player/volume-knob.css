@@ -5,7 +5,7 @@
   background-color: rgba(0, 0, 0, .15);
   box-shadow: 0 1px 1px 0 rgba(255, 255, 255, .75), inset 0 2px 2px rgba(0, 0, 0, .25);
   position: relative;
-  width: 200px;
+  width: 100%;
   padding: 10px 0px;
 }
 
@@ -15,14 +15,14 @@
   /* This is important - prevent default touch actions like scrolling */
   touch-action: none;
   position: relative;
-  width: fit-content;
+  width: 100%;
   margin: auto;
 }
 
 .knob-surround {
   position: relative;
-  width: 12vw;
-  height: 12vw;
+  width: 145px;
+  height: 145px;
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -137,14 +137,20 @@
 .max {
   right: 15%;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .volume-knob-main-container {
     width: 120px;
     height: 150px;
     padding: 7px 0px;
   }
   .knob-surround {    
-    min-width: 100px;
-    min-height: 100px;
+    width: 13vw;
+    height: 13vw;
+  }
+}
+@media (max-width: 600px) {
+  .knob-surround {    
+    width: 18vw;
+    height: 18vw;
   }
 }

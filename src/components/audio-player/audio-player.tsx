@@ -1,14 +1,16 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import buttonClickSound from '../../assets/button_click.mp3';
 import backgroundMusic from '../../assets/song.mp3';
 import song2 from '../../assets/song2.mp3';
 import song3 from '../../assets/song3.mp3';
 import { useScreen } from '../../context/ScreenContext';
+import { useScreenSize } from '../../context/ScreenSizeContext';
 import { Button } from '../button/button';
 import { AudioContextManager } from './audio-context-manager';
 import './audio-player.css';
 import { AudioVisualizer } from './audio-visualizer';
 import { VolumeKnob } from './volume-knob';
+import MovingText from './free-palastine';
 
 interface Props {
   children: React.ReactNode;
@@ -26,6 +28,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
+  const { isSmall } = useScreenSize();
 
   // Refs
   const audioRef = useRef<HTMLAudioElement>(new Audio(songs[currentSongIndex].src));
@@ -135,45 +138,95 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
   // Render component
   return (
-    <div className="audio-player">
-      {/* Controls container for mobile layout */}
-      <div className="controls-container">
-        {/* Song list */}
-        <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
-          {isScreenOn && songs.map((song, index) => (
-            <q
-              key={song.id}
-              onClick={() => changeSong(index)}
-              className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
-            >
-              {song.title}
-            </q>
-          ))}
-        </div>
-        
-        {/* Audio control buttons */}
-        <div className="audio-player-buttons">
-          <Button onClick={playAudio} disabled={isPlaying}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </Button>
-          <Button onClick={pauseAudio} disabled={!isPlaying}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
-            </svg>
-          </Button>
-          {children}
-        </div>
-      </div>
-      
-      {/* Volume knob */}
-      <div className="volume-knob-container">
-        <VolumeKnob audioRef={audioRef} initialVolume={50} />
-      </div>
-      
-      {/* Audio visualizer canvas */}
-      <canvas ref={canvasRef} />
+    <div className={`audio-player ${isSmall ? 'small-screen' : ''}`}>
+      {isSmall ? (
+        // Mobile layout (under 800px)
+        <>
+          {/* Controls container for mobile layout */}
+          <div className="controls-container">
+            {/* Free Palestine moving text */}
+            <MovingText />
+            
+            {/* Song list */}
+            <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
+              {isScreenOn && songs.map((song, index) => (
+                <q
+                  key={song.id}
+                  onClick={() => changeSong(index)}
+                  className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
+                >
+                  {song.title}
+                </q>
+              ))}
+            </div>
+            
+            {/* Audio control buttons */}
+            <div className="audio-player-buttons">
+              <Button onClick={playAudio} disabled={isPlaying}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </Button>
+              <Button onClick={pauseAudio} disabled={!isPlaying}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
+                </svg>
+              </Button>
+              {children}
+            </div>
+          </div>
+          
+          {/* Volume knob */}
+          <div className="volume-knob-container">
+            <VolumeKnob audioRef={audioRef} initialVolume={50} />
+          </div>
+          
+          {/* Audio visualizer canvas */}
+          <canvas ref={canvasRef} />
+        </>
+      ) : (
+        // Desktop layout
+        <>
+          {/* Free Palestine moving text */}
+          <MovingText />
+          
+          {/* Song list */}
+          <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
+            {isScreenOn && songs.map((song, index) => (
+              <q
+                key={song.id}
+                onClick={() => changeSong(index)}
+                className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
+              >
+                {song.title}
+              </q>
+            ))}
+          </div>
+          
+          {/* Audio visualizer canvas */}
+          <canvas ref={canvasRef} />
+          
+          {/* Audio control buttons */}
+          <div className="audio-player-buttons">
+            <Button onClick={playAudio} disabled={isPlaying}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </Button>
+            <Button onClick={pauseAudio} disabled={!isPlaying}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
+              </svg>
+            </Button>
+            {children}
+          </div>
+          
+          {/* Volume knob */}
+          <div className="volume-knob-container">
+            <VolumeKnob audioRef={audioRef} initialVolume={50} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

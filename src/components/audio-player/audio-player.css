@@ -23,7 +23,7 @@ canvas {
   height: 100%;
   width: 100%;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .audio-player {
     display: grid;
     grid-template-areas: 
@@ -49,6 +49,8 @@ canvas {
     width: 100%;
     max-width: none;
     margin-bottom: 0.5rem;
+    margin-top: unset;
+
     min-height: 82px;
     gap: unset;
     padding: 0.6rem 0.4rem;
@@ -68,6 +70,7 @@ canvas {
     width: 100%;
     justify-content: flex-start;
     gap: 0.5rem !important;
+    margin-top: unset;
   }
 
   .audio-player .volume-knob-container {
@@ -79,7 +82,9 @@ canvas {
 
 .audio-player-buttons {
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  margin-top: 2rem;
 }
 
 @keyframes glitchText {
@@ -139,6 +144,7 @@ canvas {
 .song-list-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -151,6 +157,7 @@ canvas {
   border: 4px solid rgba(0, 0, 0, 0.25);
   min-height: 135px;
   position: relative;
+  margin-top: 2rem;
   overflow: hidden;
   width: calc(var(--pc-container-left-width) - 2rem);
 
