@@ -8,6 +8,7 @@ import { LearningTraining } from './screens/learning-training/learning-training'
 import { Skills } from './screens/skills/skills';
 import { useKeyboardSound } from './hooks/useKeyboardSound';
 import { ScreenProvider } from './context/ScreenContext';
+import { ScreenSizeProvider } from './context/ScreenSizeContext';
 
 function AppContent() {
   return (
@@ -42,9 +43,11 @@ function App() {
   });
 
   return (
-    <ScreenProvider>
-      <AppContent />
-    </ScreenProvider>
+    <ScreenSizeProvider>
+      <ScreenProvider>
+        <AppContent />
+      </ScreenProvider>
+    </ScreenSizeProvider>
   );
 }
 
