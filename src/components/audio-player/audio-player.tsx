@@ -145,10 +145,10 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
           {/* Controls container for mobile layout */}
           <div className="controls-container">
             {/* Free Palestine moving text */}
-            <MovingText />
+
             
             {/* Song list */}
-            <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
+            <div className={`song-list-container bg-screens ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
               {isScreenOn && songs.map((song, index) => (
                 <q
                   key={song.id}
@@ -187,26 +187,8 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
       ) : (
         // Desktop layout
         <>
-          {/* Free Palestine moving text */}
+          
           <MovingText />
-          
-          {/* Song list */}
-          <div className={`song-list-container ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
-            {isScreenOn && songs.map((song, index) => (
-              <q
-                key={song.id}
-                onClick={() => changeSong(index)}
-                className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
-              >
-                {song.title}
-              </q>
-            ))}
-          </div>
-          
-          {/* Audio visualizer canvas */}
-          <canvas ref={canvasRef} />
-          
-          {/* Audio control buttons */}
           <div className="audio-player-buttons">
             <Button onClick={playAudio} disabled={isPlaying}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -221,7 +203,20 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
             {children}
           </div>
           
-          {/* Volume knob */}
+          <div className={`song-list-container bg-screens ${!isScreenOn ? 'screen-off' : ''} ${isGlitching ? 'glitching' : ''}`}>
+            {isScreenOn && songs.map((song, index) => (
+              <q
+                key={song.id}
+                onClick={() => changeSong(index)}
+                className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
+              >
+                {song.title}
+              </q>
+            ))}
+          </div>
+          
+          <canvas ref={canvasRef} />
+          
           <div className="volume-knob-container">
             <VolumeKnob audioRef={audioRef} initialVolume={50} />
           </div>
