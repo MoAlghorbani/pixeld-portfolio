@@ -12,7 +12,7 @@ import { ScreenSizeProvider } from './context/ScreenSizeContext';
 
 function AppContent() {
   return (
-    <div className="App scroll">
+    <div className="App">
       <TvContainer>
         {/* <button className="back-button" onClick={() => window.history.back()}>
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

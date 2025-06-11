@@ -6,16 +6,10 @@
   --dark-green: #126B12;
   --display-height: 100vh;
   --blink-time: 500ms;
-  scrollbar-color: var(--main-green) var(--dark-green);
-  scrollbar-width: thin;
   --pc-container-left-width: 280px;
   /* font-size: clamp(18px, 3vw, 30px); */
 }
 
-.scroll {
-  scrollbar-color: var(--main-green) var(--dark-green);
-  scrollbar-width: thin;
-}
 
 * {
   font-family: "VT323", monospace;
@@ -71,11 +65,13 @@
 }
 
 body {
+  background-color: #1E2B24;
+  /* background-color: #3f3; */
+  padding: 0;
   margin: 0;
 }
 
 .App {
-  background-color: #121;
   min-height: 100vh;
   display: flex;
 }
@@ -160,4 +156,13 @@ section::after {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.bg-screens{
+  background-color: #131;
+  background-image: radial-gradient(ellipse 500% 100% at 50% 90%, transparent, #121);
+  background-position: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), 0 16px 32px rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(255, 255, 255, .75), inset 0 4px 8px rgba(0, 0, 0, .35);
+  border: 4px solid rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
 }

@@ -21,8 +21,8 @@
 
 .knob-surround {
   position: relative;
-  width: 145px;
-  height: 145px;
+  width: 125px;
+  height: 125px;
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -137,20 +137,22 @@
 .max {
   right: 15%;
 }
-@media (max-width: 800px) {
+@media (max-width: 800px) or (max-height: 690px) {s
   .volume-knob-main-container {
     width: 120px;
     height: 150px;
     padding: 7px 0px;
   }
   .knob-surround {    
-    width: 13vw;
-    height: 13vw;
+    margin-right: 15px;
+    margin-left: 15px;
   }
 }
 @media (max-width: 600px) {
   .knob-surround {    
-    width: 18vw;
-    height: 18vw;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 100px;
+    height:100px ;
   }
 }

@@ -90,7 +90,7 @@
   transition: box-shadow 0.2s ease;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px) or (max-height: 690px) {
   .button-14 {
     min-width: 3em;
     padding: 0 6px 10px;

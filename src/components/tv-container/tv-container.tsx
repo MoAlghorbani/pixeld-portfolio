@@ -23,7 +23,7 @@ export const TvContainer: React.FC<Props> = ({ children }) => {
             <div className='pc-container-right'>
                 <div className='pc-container-right-effects' />
                 <div className='pc-container-right-content'>
-                    <div className={`pc-container-right-content-children ${!isScreenOn ? 'screen-off' : ''}`}>
+                    <div  className={`pc-container-right-content-children ${!isScreenOn ? 'screen-off' : ''}`}>
                         {children}
                     </div>
                     <img src={frame} alt="frame" />

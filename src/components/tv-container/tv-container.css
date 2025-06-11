@@ -1,6 +1,6 @@
 .pc-container {
     width: 100vw;
-    /* height: 100vh; */
+    height: 100vh;
     display: flex;
     position: relative;
 }
@@ -122,7 +122,7 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px) or (max-height: 690px) {
     .pc-container {
         flex-direction: column;
         height: auto;
