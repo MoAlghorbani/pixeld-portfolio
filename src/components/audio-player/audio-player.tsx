@@ -28,11 +28,12 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
+  const [isAudioInitialized, setIsAudioInitialized] = useState(false);
   const { isSmall } = useScreenSize();
 
   // Refs
-  const audioRef = useRef<HTMLAudioElement>(new Audio(songs[currentSongIndex].src));
-  const buttonSoundRef = useRef(new Audio(buttonClickSound));
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const buttonSoundRef = useRef<HTMLAudioElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextManagerRef = useRef<AudioContextManager | null>(null);
   const visualizerRef = useRef<AudioVisualizer | null>(null);
@@ -40,24 +41,30 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   // Context
   const { isScreenOn, registerOnScreenOff, unregisterOnScreenOff } = useScreen();
 
-  // Initialize audio context and visualizer only once
+  // Initialize audio, context, and visualizer on mount
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    // Only create the AudioContextManager if it doesn't exist
-    if (!audioContextManagerRef.current) {
-      audioContextManagerRef.current = new AudioContextManager(audioRef.current);
-      visualizerRef.current = new AudioVisualizer(
-        canvasRef.current,
-        audioContextManagerRef.current.getAnalyzer()
-      );
-    }
+    const audioEl = new Audio();
+    audioRef.current = audioEl;
+
+    const buttonSoundEl = new Audio(buttonClickSound);
+    buttonSoundRef.current = buttonSoundEl;
+
+    const manager = new AudioContextManager(audioEl);
+    audioContextManagerRef.current = manager;
+
+    const visualizer = new AudioVisualizer(
+      canvasRef.current,
+      manager.getAnalyzer()
+    );
+    visualizerRef.current = visualizer;
+
+    setIsAudioInitialized(true);
 
     return () => {
-      visualizerRef.current?.stop();
-      audioContextManagerRef.current?.cleanup();
-      audioContextManagerRef.current = null;
-      visualizerRef.current = null;
+      visualizer.stop();
+      manager.cleanup();
     };
   }, []);
 
@@ -82,7 +89,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
     const handleScreenOff = async () => {
       if (isPlaying) {
         try {
-          audioRef.current.pause();
+          audioRef.current!.pause();
           setIsPlaying(false);
           visualizerRef.current?.stop();
         } catch (error) {
@@ -98,7 +105,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
   // Memoized audio control functions
   const playAudio = useCallback(async () => {
-    if (!isScreenOn) return;
+    if (!isScreenOn || !audioRef.current || !buttonSoundRef.current) return;
     try {
       await audioContextManagerRef.current?.resume();
       await buttonSoundRef.current.play();
@@ -112,7 +119,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   }, [isScreenOn]);
 
   const pauseAudio = useCallback(async () => {
-    if (!isScreenOn) return;
+    if (!isScreenOn || !audioRef.current || !buttonSoundRef.current) return;
     try {
       await buttonSoundRef.current.play();
       await new Promise(resolve => setTimeout(resolve, 200));
@@ -124,17 +131,20 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
     }
   }, [isScreenOn]);
 
-  const changeSong = useCallback(async (index: number) => {
-    const wasPlaying = isPlaying;
-    if (isPlaying) {
-      await pauseAudio();
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.src = songs[currentSongIndex].src;
+      if (isPlaying) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay was prevented.
+            setIsPlaying(false);
+          });
+        }
+      }
     }
-    setCurrentSongIndex(index);
-    audioRef.current.src = songs[index].src;
-    if (wasPlaying) {
-      await playAudio();
-    }
-  }, [isPlaying, pauseAudio, playAudio]);
+  }, [currentSongIndex]); // isPlaying is intentionally omitted to prevent loops
 
   // Render component
   return (
@@ -152,7 +162,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
               {isScreenOn && songs.map((song, index) => (
                 <q
                   key={song.id}
-                  onClick={() => changeSong(index)}
+                  onClick={() => setCurrentSongIndex(index)}
                   className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
                 >
                   {song.title}
@@ -178,11 +188,11 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
           
           {/* Volume knob */}
           <div className="volume-knob-container">
-            <VolumeKnob audioRef={audioRef} initialVolume={50} />
+            {isAudioInitialized && <VolumeKnob audioRef={audioRef} initialVolume={50} />}
           </div>
           
           {/* Audio visualizer canvas */}
-          <canvas ref={canvasRef} />
+            <canvas ref={canvasRef} />
         </>
       ) : (
         // Desktop layout
@@ -207,7 +217,7 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
             {isScreenOn && songs.map((song, index) => (
               <q
                 key={song.id}
-                onClick={() => changeSong(index)}
+                onClick={() => setCurrentSongIndex(index)}
                 className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}
               >
                 {song.title}
