@@ -23,7 +23,7 @@ export const ScreenSizeProvider: React.FC<ScreenSizeProviderProps> = ({ children
   useEffect(() => {
     // Check initial screen size
     const checkScreenSize = () => {
-      setIsSmall(window.innerWidth < 800 || window.innerHeight < 690);
+      setIsSmall(window.innerWidth < 800 || window.innerHeight < 600);
     };
 
     // Check on mount

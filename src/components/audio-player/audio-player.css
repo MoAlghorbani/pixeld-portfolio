@@ -21,7 +21,8 @@ canvas {
   height: 100%;
   width: 100%;
 }
-@media (max-width: 800px) or (max-height: 690px) {
+
+@media (max-width: 800px) or (max-height: 600px) {
   .audio-player {
     display: grid;
     grid-template-areas: 
@@ -188,4 +189,13 @@ canvas {
   color: #126B12;
   text-shadow: unset;
   font-weight: bold;
+}
+@media (max-height: 678px) and (min-height: 600px) {
+  .audio-player{
+    gap: 1rem;
+    padding: 0px;
+  }
+  canvas{
+    margin-top: 0px;
+  }
 }

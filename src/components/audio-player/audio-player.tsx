@@ -41,10 +41,8 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
   // Context
   const { isScreenOn, registerOnScreenOff, unregisterOnScreenOff } = useScreen();
 
-  // Initialize audio, context, and visualizer on mount
+  // Initialize core audio elements that DON'T depend on the canvas
   useEffect(() => {
-    if (!canvasRef.current) return;
-
     const audioEl = new Audio();
     audioRef.current = audioEl;
 
@@ -54,19 +52,39 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
     const manager = new AudioContextManager(audioEl);
     audioContextManagerRef.current = manager;
 
-    const visualizer = new AudioVisualizer(
-      canvasRef.current,
-      manager.getAnalyzer()
-    );
-    visualizerRef.current = visualizer;
-
     setIsAudioInitialized(true);
 
     return () => {
-      visualizer.stop();
+      // This cleanup runs when the component fully unmounts
       manager.cleanup();
     };
   }, []);
+
+  // Initialize the visualizer, which DOES depend on the canvas
+  useEffect(() => {
+    // Wait for the canvas and the audio manager to be ready
+    if (!canvasRef.current || !audioContextManagerRef.current) {
+      return;
+    }
+
+    // A visualizer might exist from a previous render, so stop it.
+    visualizerRef.current?.stop();
+
+    const visualizer = new AudioVisualizer(
+      canvasRef.current,
+      audioContextManagerRef.current.getAnalyzer()
+    );
+    visualizerRef.current = visualizer;
+
+    // If music was already playing when this effect runs, start the new visualizer.
+    if (isPlaying) {
+      visualizer.start();
+    }
+
+    return () => {
+      visualizer.stop();
+    };
+  }, [isSmall, isAudioInitialized]);
 
   // Handle screen state changes and glitching effect
   useEffect(() => {
