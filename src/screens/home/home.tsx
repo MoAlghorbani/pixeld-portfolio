@@ -37,12 +37,12 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className="home-container">
+    <div style={{marginTop:'2rem'}} className="home-container">
       <TypingAnimation
         duration={40}
         text='Hey, I am Mohammed Al-ghorbani, a obsessive software developer.'
         onComplete={() => setIntroComplete(true)}
-        style={{ fontSize: 'clac(10px+1120px)' }}
+        style={{ fontSize: 'min(1.75rem,6vw)' }}
         animate={isFirstVisit}
       />
       <div style={{ marginTop: '5rem' }}>
@@ -53,7 +53,7 @@ export const Home: React.FC = () => {
             className="text-q text-q-content"
             style={{
               cursor: 'pointer',
-              fontSize: '1.5rem',
+              fontSize: 'min(1.5rem,5vw)',
               marginBottom: '1.6rem',
               display: 'block',
               opacity: index <= currentIndex ? 1 : 0

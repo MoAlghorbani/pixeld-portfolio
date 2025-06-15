@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { useScreen } from '../../context/ScreenContext';
 import './free-palastine.css';
 
 const MovingText = () => {
   const { isScreenOn } = useScreen();
 
-  const textVariants = {
+  const textVariants:Variants = {
     initial: { x: '-100%' },
     animate: {
       x: '140%',
@@ -13,7 +13,6 @@ const MovingText = () => {
         x: {
           repeat: Infinity,
           repeatType: 'loop',
-          //   duration: 12,
           duration: 5,
           ease: 'linear'
         }
@@ -23,7 +22,6 @@ const MovingText = () => {
 
   return (
     <div className={`${!isScreenOn && 'screen-off'} bg-screens`}>
-      {/* {isScreenOn &&} */}
       <div className='moving-text-container'>
         {isScreenOn && <motion.span
           className="moving-text"

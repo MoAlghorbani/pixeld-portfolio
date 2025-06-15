@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
 import { useFirstVisit } from '../../hooks/useFirstVisit';
 
@@ -25,6 +26,10 @@ export const Skills = () => {
         {
             type: 'skill',
             text: 'React'
+        },
+        {
+            type: 'skill',
+            text: 'NextJs'
         },
         {
             type: 'skill',
@@ -88,24 +93,21 @@ export const Skills = () => {
         },
     ];
 
-    // Combine all texts into a single string with formatting
     const allTexts = skillItems.map(item => {
         if (item.type === 'heading') {
-            // Add extra newline before headings (except the first one)
             return `\n## ${item.text}\n`;
         } else {
             return `> ${item.text}\n`;
         }
     }).join('');
 
-
     return (
-        <div className='flex flex-col gap-4'>
-            {/* Render single TypingAnimation with combined text */}
-            <div className='text-q text-q-content' style={{ fontSize: '1.2rem', whiteSpace: 'pre-wrap' }}>
+        <div>
+            <Link to={'/'} className='link'>{'<'} - RETURN TO MENU</Link>
+            <div className='text-q ' style={{ fontSize: '1.2rem', whiteSpace: 'pre-wrap' }}>
                 <TypingAnimation
                     text={allTexts}
-                    duration={1} // Adjust duration as needed for the combined text
+                    duration={1}
                     animate={isFirstVisit}
                     style={{ fontSize: '1.2rem' }}
                 />

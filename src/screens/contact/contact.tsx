@@ -126,7 +126,7 @@ export const Contact: React.FC = () => {
               onChange={handleInputChange}
               placeholder='Your Message'
               className='form-input message-input scroll'
-              rows={5}
+              rows={3}
               required
             />
           </div>

@@ -10,15 +10,12 @@
   /* font-size: clamp(18px, 3vw, 30px); */
 }
 
-
 * {
   font-family: "VT323", monospace;
   font-weight: 400;
   margin: 0px;
   box-sizing: border-box;
 }
-
-
 
 .back-button {
   background: transparent;
@@ -179,4 +176,9 @@ section::after {
 .link:hover{
   background-color: var(--main-green);
   color: #000;
+}
+@media (max-width: 800px){
+  section{
+    padding: 0.5em 1.25em;
+  }
 }
