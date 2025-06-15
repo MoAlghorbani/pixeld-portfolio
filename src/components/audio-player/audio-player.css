@@ -22,7 +22,7 @@ canvas {
   width: 100%;
 }
 
-@media (max-width: 800px) or (max-height: 600px) {
+@media (max-width: 800px) , (max-height: 600px) {
   .audio-player {
     display: grid;
     grid-template-areas: 
@@ -39,7 +39,6 @@ canvas {
 
   }
 
-  /* Create a nested grid for the controls (song list + buttons) */
   .audio-player .controls-container {
     grid-area: controls;
     display: flex;

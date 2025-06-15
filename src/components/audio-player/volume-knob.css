@@ -137,7 +137,7 @@
 .max {
   right: 15%;
 }
-@media (max-width: 800px) or (max-height: 600px) {s
+@media (max-width: 800px) , (max-height: 600px) {s
   .volume-knob-main-container {
     width: 120px;
     height: 150px;

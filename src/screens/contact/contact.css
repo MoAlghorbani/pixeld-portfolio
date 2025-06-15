@@ -1,53 +1,60 @@
 .contact-container{
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
     height: 100%;
+    gap: 0.6rem;
 }
-.contact-personal{
-    width: 48%;
-    height: 80%;
-    border:1px solid var(--main-green);    
-    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+.contact-section{
+    width: 100%;
+
+    border:1px solid var(--main-green);
+    display: flex;
+    flex-direction: column;
 }
 .contact-title{
-    text-align: center; 
-    border-bottom: 1px solid var(--main-green);    
-    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
-    padding: 1rem 0px;
+    text-align: left;
+    background-color: var(--main-green);
+    color: black;
+    padding: 0.2rem 0.5rem;
+    font-weight: bold;
+    text-shadow: none;
 }
 .personal-info {
   white-space: pre-line;
   line-height: 2;  
-  padding: 1rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 .personal-info > span {
-    font-size: 1.75rem;
+    font-size: 1.1rem;
 }
 
-.contact-contact{
-    position: relative;
-    width: 48%;
-    height: 80%;
-    border:1px solid var(--main-green);
-    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+.availability-info {
+  white-space: pre-line;
+  line-height: 2;  
+  padding: 0.5rem 0.5rem;
+}
+
+.availability-info > span {
+    font-size: 1.1rem;
 }
 
 .contact-form {
-    padding: 2rem;
+    position: relative;
+    padding: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.5rem;
+    flex-grow: 1;
 }
 
 .form-group {
     display: flex;
-    /* flex-direction: column; */
+
 }
 
 .form-label{
-    text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255,255,255,0.5);
-    font-size: 1.75rem;
+    font-size: 1.1rem;
 }
 .form-label.empty {
     color: var(--dark-green);
@@ -55,14 +62,14 @@
 }
 
 .form-label.filled {
-    font-size: 1.75rem;
+    font-size: 1.1rem;
 }
 .form-input:placeholder-shown{
     text-shadow: none;
 }
 .form-input {
     width: 100%;
-    font-size: 1.75rem;
+    font-size: 1.1rem;
     background: transparent;
     border:none;
     color: var(--main-green);
@@ -81,17 +88,15 @@
 }
 
 .submit-button {
+    position: absolute;
     background: transparent;
     border: 1px solid var(--main-green);
     color: var(--main-green);
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
     cursor: pointer;
-    align-self: flex-start;
-    position: absolute;
-    bottom: 0%;
-    right: 0%;
-    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+    bottom: 0;
+    right: 0;
 }
 
 .submit-button:hover {
