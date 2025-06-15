@@ -4,6 +4,7 @@ import { TypingAnimation } from '../../components/typing-text/typing-text';
 import { useFirstVisit } from '../../hooks/useFirstVisit';
 import { useScreen } from '../../context/ScreenContext';
 import { Link } from 'react-router-dom';
+import emailjs from "@emailjs/browser";
 
 export const Contact: React.FC = () => {
   const isFirstVisit = useFirstVisit('contact');
@@ -15,6 +16,7 @@ export const Contact: React.FC = () => {
     message: ''
   });
 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -25,7 +27,37 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+     emailjs
+      .send(
+        "service_rsy5zdd",
+        "template_kl6xxrm",
+        {
+          name: formData.name,
+          to_name: "MohammedFadl",
+          email: formData.email,
+          to_email: "mohammedfadl.work@gmail.com",
+          message: formData.message,
+        },
+        "ORYYkppNCQefUQ3tf"
+      )
+      .then(
+        () => {
+          // setLoading(false);
+          alert("Thank you. I will get back to you as soon as possible.");
+
+          setFormData({
+            name: "",
+            email: "",
+            message: "",
+          });
+        },
+        (error) => {
+          // setLoading(false);
+          console.error(error);
+
+          alert("Ahh, something went wrong. Please try again.");
+        }
+      );
   };
 
   const personalInfo = `> Name: Mohammed Fathl Mohammed Al-Ghorbany
