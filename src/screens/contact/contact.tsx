@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import './contact.css';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
-import { useFirstVisit } from '../../hooks/useFirstVisit';
 import { useScreen } from '../../context/ScreenContext';
 import { Link } from 'react-router-dom';
 import emailjs from "@emailjs/browser";
 
 export const Contact: React.FC = () => {
-  const isFirstVisit = useFirstVisit('contact');
   const { isScreenOn } = useScreen();
 
   const [formData, setFormData] = useState({
@@ -67,19 +65,19 @@ export const Contact: React.FC = () => {
 > Github: https://github.com/MoAlghorbani`;
 
   return <> 
-    {isScreenOn ? (
+    {isScreenOn && (
       <div className='contact-container'>
       <Link to={'/'} className='link'>{'<'} - RETURN TO MENU</Link>
       <div className='contact-section contact-details-section'>
         <h3 className='text-q contact-title'>CONTACT DETAILS</h3>
         <div className='personal-info'>
-          <TypingAnimation text={personalInfo} duration={30} animate={isFirstVisit} />
+          <TypingAnimation text={personalInfo} duration={20} />
         </div>
       </div>
       <div className='contact-section availability-section'>
         <h3 className='text-q contact-title'>AVAILABILITY</h3>
         <div className='availability-info'>
-          <TypingAnimation text={`> front-end development \n> Odoo development \n> Mobile development`} duration={30} animate={isFirstVisit} />
+          <TypingAnimation text={`> front-end development \n> Odoo development \n> Mobile development`} duration={20} />
         </div>
       </div>
       <div className='contact-section contact-form-section'>
@@ -136,6 +134,6 @@ export const Contact: React.FC = () => {
         </form>
       </div>
     </div>
-    ) : null}
+    ) }
   </>
 };

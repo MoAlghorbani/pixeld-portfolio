@@ -1,14 +1,13 @@
 import { TypingAnimation } from '../../components/typing-text/typing-text';
-import { useFirstVisit } from '../../hooks/useFirstVisit';
+import { useScreen } from '../../context/ScreenContext';
 
 interface SkillItem {
-  type: 'heading' | 'skill' | 'description';
-  text: string;
+    type: 'heading' | 'skill' | 'description';
+    text: string;
 }
 
 export const Experience = () => {
-    const isFirstVisit = useFirstVisit('skills');
-
+    const { isScreenOn } = useScreen();
     const skillItems: SkillItem[] = [
         {
             type: 'heading',
@@ -34,16 +33,16 @@ export const Experience = () => {
 
 
     return (
-        <div className='flex flex-col gap-4'>
-            {/* Render single TypingAnimation with combined text */}
-            <div className='text-q text-q-content' style={{ fontSize: '1.2rem', whiteSpace: 'pre-wrap' }}>
-                <TypingAnimation
-                    text={allTexts}
-                    duration={5} // Adjust duration as needed for the combined text
-                    animate={isFirstVisit}
-                    style={{ fontSize: '1.2rem' }}
-                />
-            </div>
-        </div>
+        <>
+            {isScreenOn && <div className='flex flex-col gap-4'>
+                <div className='text-q text-q-content' style={{ fontSize: '1.2rem', whiteSpace: 'pre-wrap' }}>
+                    <TypingAnimation
+                        text={allTexts}
+                        duration={5}
+                        style={{ fontSize: '1.2rem' }}
+                    />
+                </div>
+            </div>}
+        </>
     );
 };

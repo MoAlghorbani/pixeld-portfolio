@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
-import { useFirstVisit } from '../../hooks/useFirstVisit';
 
 interface SkillItem {
   type: 'heading' | 'skill';
@@ -8,7 +7,6 @@ interface SkillItem {
 }
 
 export const Skills = () => {
-    const isFirstVisit = useFirstVisit('skills');
 
     const skillItems: SkillItem[] = [
         {
@@ -108,7 +106,6 @@ export const Skills = () => {
                 <TypingAnimation
                     text={allTexts}
                     duration={1}
-                    animate={isFirstVisit}
                     style={{ fontSize: '1.2rem' }}
                 />
             </div>

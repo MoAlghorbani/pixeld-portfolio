@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { TypingAnimation } from '../../components/typing-text/typing-text'
-import { useFirstVisit } from '../../hooks/useFirstVisit'
 
 export const LearningTraining = () => {
-    const isFirstVisit = useFirstVisit('learning-training');    
     const [showEducation, setShowEducation] = useState<boolean>(false);
     const [currentEducation, setCurrentEducation] = useState<number>(-1);
     const [showTraining, setShowTraining] = useState<boolean>(false);
@@ -27,13 +25,12 @@ export const LearningTraining = () => {
     ]    
 
     useEffect(() => {
-        if (!isFirstVisit) {            
-            setShowEducation(true);
-            setShowTraining(true);
-            setCurrentEducation(education.length - 1);
-            setCurrentTraining(training.length - 1);
-        }
-    }, [isFirstVisit]);
+        setShowEducation(true);
+        setShowTraining(true);
+        setCurrentEducation(education.length - 1);
+        setCurrentTraining(training.length - 1);
+    
+    }, []);
     
     useEffect(() => {
         if (showEducation) {
@@ -76,7 +73,6 @@ export const LearningTraining = () => {
                                             text={edu}
                                             duration={10}
                                             onComplete={handleEducationComplete}
-                                            animate={isFirstVisit}
                                         />
                                     ) : index < currentEducation ? (
                                         edu
@@ -104,7 +100,6 @@ export const LearningTraining = () => {
                                             text={train}
                                             duration={10}
                                             onComplete={handleTrainingComplete}
-                                            animate={isFirstVisit}
                                         />
                                     ) : index < currentTraining ? (
                                         train

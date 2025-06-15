@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
-import { useFirstVisit } from '../../hooks/useFirstVisit';
+import { useScreen } from '../../context/ScreenContext';
 
 interface Section {
   name: string;
@@ -10,7 +10,6 @@ interface Section {
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
-  const isFirstVisit = useFirstVisit('home');
   const [sections] = useState<Section[]>([
     { name: 'Experience & Projects', route: 'experience-projects' },
     { name: 'Skills', route: 'skills' },
@@ -19,6 +18,7 @@ export const Home: React.FC = () => {
   ]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [introComplete, setIntroComplete] = useState<boolean>(false);
+  const { isScreenOn } = useScreen();
 
   useEffect(() => {
     if (introComplete) {
@@ -37,42 +37,42 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div style={{marginTop:'2rem'}} className="home-container">
-      <TypingAnimation
-        duration={40}
-        text='Hey, I am Mohammed Al-ghorbani, a obsessive software developer.'
-        onComplete={() => setIntroComplete(true)}
-        style={{ fontSize: 'min(1.75rem,6vw)' }}
-        animate={isFirstVisit}
-      />
-      <div style={{ marginTop: '5rem' }}>
-        {sections.map((message: Section, index: number) => (
-          <q
-            key={index}
-            onClick={() => handleSectionClick(message.route)}
-            className="text-q text-q-content"
-            style={{
-              cursor: 'pointer',
-              fontSize: 'min(1.5rem,5vw)',
-              marginBottom: '1.6rem',
-              display: 'block',
-              opacity: index <= currentIndex ? 1 : 0
-            }}
-          >
-            {index === currentIndex ? (
-              <TypingAnimation
-                duration={20}
-                text={message.name}
-                onComplete={handleTypingComplete}
-                style={{ fontSize: 'inherit' }}
-                animate={isFirstVisit}
-              />
-            ) : index < currentIndex ? (
-              message.name
-            ) : null}
-          </q>
-        ))}
-      </div>
-    </div>
+    <>
+      {isScreenOn && <div style={{ marginTop: '2rem' }} className="home-container">
+        <TypingAnimation
+          duration={25}
+          text='Hey, I am Mohammed Al-ghorbani, a obsessive software developer.'
+          onComplete={() => setIntroComplete(true)}
+          style={{ fontSize: 'min(1.75rem,6vw)' }}
+        />
+        <div style={{ marginTop: '5rem' }}>
+          {sections.map((message: Section, index: number) => (
+            <q
+              key={index}
+              onClick={() => handleSectionClick(message.route)}
+              className="text-q text-q-content"
+              style={{
+                cursor: 'pointer',
+                fontSize: 'min(1.5rem,5vw)',
+                marginBottom: '1.6rem',
+                display: 'block',
+                opacity: index <= currentIndex ? 1 : 0
+              }}
+            >
+              {index === currentIndex ? (
+                <TypingAnimation
+                  duration={15}
+                  text={message.name}
+                  onComplete={handleTypingComplete}
+                  style={{ fontSize: 'inherit' }}
+                />
+              ) : index < currentIndex ? (
+                message.name
+              ) : null}
+            </q>
+          ))}
+        </div>
+      </div>}
+    </>
   );
 }
